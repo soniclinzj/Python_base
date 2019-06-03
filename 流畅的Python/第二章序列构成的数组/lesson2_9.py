@@ -1,4 +1,5 @@
 
+from time import perf_counter as pc  # 4
 '''
 # 2.9当列表不是首选时
             虽然列表既灵活又简单，但面对各类需求时，我们可能会有更好的选择。
@@ -158,16 +159,16 @@ print('#2-2', type(a))
 print('#3', a.shape)  # 3
 
 a.shape = 3, 4  # 4  ；3 == 行，4==列
-print('#4-1\n',a)
-print('#4-2',a.shape)
+print('#4-1\n', a)
+print('#4-2', a.shape)
 
-print('#5',a[2])  # 5
+print('#5', a[2])  # 5
 
-print('#6',a[2, 1])  # 6
+print('#6', a[2, 1])  # 6
 
-print('#7',a[:, 1])  # 7
+print('#7', a[:, 1])  # 7
 
-print('#8\n',a.transpose())  # 8
+print('#8\n', a.transpose())  # 8
 
 
 print('#2.9.3', '=' * 20)
@@ -185,34 +186,32 @@ print('#2.9.3', '=' * 20)
 '''
 
 
-
-if False :  # 生成浮点文件
-    f = open("floats-10M-lines.txt","a+")
+if False:  # 生成浮点文件
+    f = open("floats-10M-lines.txt", "a+")
     for k in range(10**4):
-        num = str(random()*100000) + '\n'
+        num = str(random() * 100000) + '\n'
         f.write(num)
 
-floats = numpy.loadtxt('floats-10M-lines.txt')#1
-print('#2',floats[-3:])#2
+floats = numpy.loadtxt('floats-10M-lines.txt')  # 1
+print('#2', floats[-3:])  # 2
 
-floats *= .5#3
-print('#3',floats[-3:])
+floats *= .5  # 3
+print('#3', floats[-3:])
 
-from time import perf_counter as pc#4
 
 t0 = pc()
 floats /= 3
-print('#5-1',pc() - t0)#5
+print('#5-1', pc() - t0)  # 5
 '''
-perf_counter() 
+perf_counter()
     # 调用一次 perf_counter()，从计算机系统里随机选一个时间点A，计算其距离当前时间点B1有多少秒。
     当第二次调用该函数时，默认从第一次调用的时间点A算起，距离当前时间点B2有多少秒。
     两个函数取差，即实现从时间点B1到B2的计时功能。
 '''
-print('#5-2',floats[-3:])
+print('#5-2', floats[-3:])
 
-numpy.save('floats-10M', floats)#6
-floats2 = numpy.load('floats-10M.npy', 'r+')#7
+numpy.save('floats-10M', floats)  # 6
+floats2 = numpy.load('floats-10M.npy', 'r+')  # 7
 
 floats2 *= 6
-print('#8',floats2[-3:])#8
+print('#8', floats2[-3:])  # 8
