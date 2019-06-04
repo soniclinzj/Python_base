@@ -35,8 +35,10 @@ from time import perf_counter as pc  # 4
 
 # 示例 2-20　一个浮点型数组的创建、存入文件和从文件读取的过程
 
+from time import perf_counter as pc  # 4
 from array import array  # 1
 from random import random
+from collections import deque
 import numpy
 import string
 
@@ -215,3 +217,54 @@ floats2 = numpy.load('floats-10M.npy', 'r+')  # 7
 
 floats2 *= 6
 print('#8', floats2[-3:])  # 8
+
+'''
+# 双向队列和其他形式的队列
+
+利用 .append 和 .pop 方法，我们可以把列表当作栈或者队列来用（比如，把 .append 和 .pop(0) 合起来用，就能模拟栈的“先进先出”的特
+点）。但是删除列表的第一个元素（抑或是在第一个元素之前添加一个元素）之类的操作是很耗时的，因为这些操作会牵扯到移动列表里的所有元素。
+
+collections.deque 类（双向队列）是一个线程安全、可以快速从两端添加或者删除元素的数据类型。而且如果想要有一种数据类型来存放“最近
+用到的几个元素”，deque 也是一个很好的选择。这是因为在新建一个双向队列的时候，你可以指定这个队列的大小，如果这个队列满员了，还可以
+从反向端删除过期的元素，然后在尾端添加新的元素。示例 2-23 中有几个双向队列的典型操作。
+
+        ❶ maxlen 是一个可选参数，代表这个队列可以容纳的元素的数量，而且一旦设定，这个属性就不能修改了。
+        ❷ 队列的旋转操作接受一个参数 n，当 n > 0 时，队列的最右边的 n个元素会被移动到队列的左边。
+        当 n < 0 时，最左边的 n 个元素会被移动到右边。
+        ❸ 当试图对一个已满（len(d) == d.maxlen）的队列做尾部添加操作的时候，它头部的元素会被删除掉。
+        注意在下一行里，元素 0 被删除了。
+        ❹ 在尾部添加 3 个元素的操作会挤掉 -1、1 和 2。
+        ❺ extendleft(iter) 方法会把迭代器里的元素逐个添加到双向队列的左边，因此迭代器里的元素会逆序出现在队列里。
+
+'''
+print('#2.9.4', '=' * 20)
+
+dq = deque(range(10), maxlen=10)  # 1
+print('#1', dq)
+
+dq.rotate(3)  # 2
+print('#2-1', dq)
+
+
+dq.rotate(-4)  # 2
+print('#2-1', dq)
+
+dq.appendleft(-1)  # 3
+print('#3', dq)
+
+dq.extend([11, 22, 33])  # 4
+print('#4', dq)
+
+dq.extendleft([10, 20, 30, 40])  # 5
+print('#5', dq)
+
+'''
+print:
+#1 deque([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], maxlen=10)
+#2-1 deque([7, 8, 9, 0, 1, 2, 3, 4, 5, 6], maxlen=10)
+#2-1 deque([1, 2, 3, 4, 5, 6, 7, 8, 9, 0], maxlen=10)
+#3 deque([2, 3, 4, 5, 6, 7, 8, 9, 0, -1], maxlen=10)
+#4 deque([5, 6, 7, 8, 9, 0, -1, 11, 22, 33], maxlen=10)
+#5 deque([40, 30, 20, 10, 5, 6, 7, 8, 9, 0], maxlen=10)
+
+'''
