@@ -1,5 +1,4 @@
 
-from time import perf_counter as pc  # 4
 '''
 # 2.9当列表不是首选时
             虽然列表既灵活又简单，但面对各类需求时，我们可能会有更好的选择。
