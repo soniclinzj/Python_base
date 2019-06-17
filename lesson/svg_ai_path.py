@@ -72,14 +72,3 @@ print(data)
 
 print('\n例二','*'*20)
 
-
-ff = open("info.txt")
-line = ff.readline()
-while line:
-    #dump将字符串转换成字典
-    d1=json.loads(line)
-    print (type(d1))
-    print (d1['item_id'])
-    line = ff.readline()
-
-ff.close()
