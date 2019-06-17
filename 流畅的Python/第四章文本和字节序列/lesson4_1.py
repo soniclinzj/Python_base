@@ -1,3 +1,5 @@
+import array
+
 '''
 明确区分了人类可读的文本字符串和原始的字节序列。隐式地把字节序列转换成 Unicode 文本已成过去。本章将要讨论 Unicode 字符
 串、二进制序列，以及在二者之间转换时使用的编码。
@@ -38,6 +40,7 @@ print('#4', len(b))  # 4
 print('#5', b.decode('utf8'))  # 5
 
 print('\n示例 4-2　包含 5 个字节的 bytes 和 bytearray 对象', '-' * 20)
+
 '''
     ❶ bytes 对象可以从 str 对象使用给定的编码构建。
     ❷ 各个元素是 range(256) 内的整数。
@@ -45,6 +48,7 @@ print('\n示例 4-2　包含 5 个字节的 bytes 和 bytearray 对象', '-' * 2
     ❹ bytearray 对象没有字面量句法，而是以 bytearray() 和字节序列字面量参数的形式显示。
     ❺ bytearray 对象的切片还是 bytearray 对象。
 '''
+
 cafe = bytes('cafe', encoding='utf_8')  # 1
 print('#1', cafe)
 print('#2', cafe[0])  # 2
@@ -53,3 +57,35 @@ print('#3', cafe[:1])  # 3
 cafe_arr = bytearray(cafe)
 print('#4', cafe_arr)  # 4
 print('#5', cafe_arr[-1:])  # 5
+
+
+'''
+➊ 指定类型代码 h，创建一个短整数（16 位）数组。
+➋ octets 保存组成 numbers 的字节序列的副本。
+➌ 这些是表示那 5 个短整数的 10 个字节。
+'''
+print('\n示例 4-3　使用数组中的原始数据初始化 bytes 对象', '=' * 20)
+
+numbers = array.array('h', [-2, -1, 0, 1, 2])  # 1
+octets = bytes(numbers)  # 2
+print(octets)  # 3
+
+
+'''
+
+'''
+print('\n示例 4-4 展示了如何使用 memoryview 和 struct 提取一个 GIF 图像的宽度和高度','='*20)
+import struct
+fmt = '<3s3sHH'
+with open('filter.gif','rb') as fp:
+    img = memoryview(fp.read())
+
+header = img[:10]
+print(bytes(header))
+
+struct.unpack(fmt,header)
+
+del header
+del img
+
+
