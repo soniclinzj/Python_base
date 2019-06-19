@@ -1,5 +1,7 @@
 
 import json
+from svg.path import Path, Line, Arc, CubicBezier, QuadraticBezier
+
 '''
 
 f = open("lesson_ai_path.svg",'r',encoding="utf_8")# 以只读方式打开,加上编码不会产生乱码
@@ -43,7 +45,7 @@ for line in open("lesson_ai_path.svg","r"): #设置文件对象并读取每一�
 for k in data:
     print('\n',k)
 '''
-
+'''
 f = open("lesson_ai_path.svg",'r',encoding="utf_8")# 以只读方式打开,加上编码不会产生乱码
 svg_paths=f.read()
 path_start = '<path d="'
@@ -68,7 +70,21 @@ data = tmp1.split(' ')# 依空格进行数据封装
 svg_path_1.write(str(data))
 
 print(data)
-
+'''
 
 print('\n例二','*'*20)
 
+
+from svgpathtools import svg2paths
+
+paths, attributes = svg2paths('lesson_ai_path.svg')
+print(paths)
+print('==--=='*20)
+#print(attributes)
+'''
+for k, v in enumerate(attributes):
+    print(v['d'])  # print d-string of k-th path in SVG
+
+
+'''
+help(svg2paths)
