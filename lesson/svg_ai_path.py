@@ -1,4 +1,5 @@
 
+from svgpathtools import svg2paths, wsvg  # 导入路径转换模块,
 import json
 from svg.path import Path, Line, Arc, CubicBezier, QuadraticBezier
 
@@ -72,19 +73,28 @@ svg_path_1.write(str(data))
 print(data)
 '''
 
-print('\n例二','*'*20)
+print('\n例二', '*' * 20)
 
-
+# 导入路径转换模块
+# svgpathtools官网： https://pypi.org/project/svgpathtools/#files
 from svgpathtools import svg2paths
 
-paths, attributes = svg2paths('lesson_ai_path.svg')
+
+
+# 生成路径对应资料用于存放：动作关系、数据资料（控制点关系）
+svg_path = open('paths.txt', 'w', encoding='utf_8')
+
+# 生成截取路径写入字典的原始资料
+svg_attributes = open('attributes.txt','w',encoding='utf_8')
+
+paths, attributes = svg2paths('lesson_ai_path1.svg')  # 从svg 源文件提取出资料
+svg_path.write(str(paths))  # 写入文件
+svg_attributes.write(str(attributes))  # 写入文件
+
+
 print(paths)
 print('==--=='*20)
-#print(attributes)
-'''
-for k, v in enumerate(attributes):
-    print(v['d'])  # print d-string of k-th path in SVG
 
+for k in attributes:
+    print(k)  # print d-string of k-th path in SVG
 
-'''
-help(svg2paths)
